@@ -1,0 +1,65 @@
+# Cloud Build pipeline: test -> build -> push -> migrate -> deploy (dev by default).
+# Trigger with substitutions, e.g. _ENV=dev. Production deploys should run with _ENV=prod from a protected branch/tag.
+substitutions:
+  _ENV: dev
+  _REGION: asia-south1
+  _AR_PROJECT: ${PROJECT_ID}
+  _AR_REPO: auranexus
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+steps:
+  - id: test
+    name: python:3.12-slim
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        pip install --quiet -e ".[dev]" && ruff check src tests && pytest -q
+
+  - id: build
+    name: gcr.io/cloud-builders/docker
+    args: ["build", "-t", "${_REGION}-docker.pkg.dev/${_AR_PROJECT}/${_AR_REPO}/auranexus:${SHORT_SHA}", "."]
+    waitFor: ["test"]
+
+  - id: push
+    name: gcr.io/cloud-builders/docker
+    args: ["push", "${_REGION}-docker.pkg.dev/${_AR_PROJECT}/${_AR_REPO}/auranexus:${SHORT_SHA}"]
+
+  # Migrations run before new code serves traffic. They are forward-only and idempotent (schema_migrations).
+  - id: migrate
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    entrypoint: bash
+    args:
+      - -c
+      - |
+        IMAGE=${_REGION}-docker.pkg.dev/${_AR_PROJECT}/${_AR_REPO}/auranexus:${SHORT_SHA}
+        gcloud run jobs update auranexus-migrate-${_ENV} --region=${_REGION} --image=$$IMAGE
+        gcloud run jobs execute auranexus-migrate-${_ENV} --region=${_REGION} --wait
+
+  # Worker first (it consumes the queue), then the API.
+  - id: deploy-worker
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    args:
+      - gcloud
+      - run
+      - services
+      - update
+      - auranexus-worker-${_ENV}
+      - --region=${_REGION}
+      - --image=${_REGION}-docker.pkg.dev/${_AR_PROJECT}/${_AR_REPO}/auranexus:${SHORT_SHA}
+
+  - id: deploy-api
+    name: gcr.io/google.com/cloudsdktool/cloud-sdk:slim
+    args:
+      - gcloud
+      - run
+      - services
+      - update
+      - auranexus-api-${_ENV}
+      - --region=${_REGION}
+      - --image=${_REGION}-docker.pkg.dev/${_AR_PROJECT}/${_AR_REPO}/auranexus:${SHORT_SHA}
+
+images:
+  - ${_REGION}-docker.pkg.dev/${_AR_PROJECT}/${_AR_REPO}/auranexus:${SHORT_SHA}

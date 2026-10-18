@@ -1,0 +1,27 @@
+auranexus/
+|-- README.md
+|-- pyproject.toml  Dockerfile  docker-compose.yml  cloudbuild.yaml  Makefile  .env.example
+|-- src/auranexus/
+|   |-- config.py  container.py  migrate.py  __main__.py
+|   |-- domain/        models (Proposal, Checkpoint, Decision, Event, Evidence, roles, phases)
+|   |-- core/          store, pg_store (RLS), repo + audit chain, hitl, appliers, guardrails, llm (Vertex), bus (Pub/Sub), analytics
+|   |-- agents/        spec (SKILL.md loader), registry, runner
+|   |-- tools/         graph, scoring, prepare, design, build, testing, run (deterministic)
+|   |-- orchestrator/  router (event routing, checkpoint tracking, escalation)
+|   |-- api/           app (FastAPI), auth (OIDC + roles)
+|   `-- exports/       xlsx (test tracker workbook)
+|-- skills/            34 SKILL.md agents: prepare/ design/ build/ test/ run/
+|-- config/            hitl_policy.yaml, rubrics/, templates/, knowledge/, profiles/
+|-- migrations/        001_init.sql (tables, RLS, append-only audit)
+|-- modules/
+|   |-- gcp-networking/   VPC, subnet, private services access, firewall, API enablement
+|   |-- gcp-iam/          per-concern service accounts
+|   |-- gcp-storage/      CMEK bucket with tenant prefixes
+|   |-- gcp-database/     Cloud SQL Postgres 16 (private IP), app + owner secrets
+|   |-- gcp-pubsub/       events, notifications, DLQ, push subscription, Scheduler ticks
+|   |-- gcp-bigquery/     analytics dataset and tables
+|   |-- gcp-cloud-run/    api + worker services, migration job
+|   `-- auranexus-env/    composite: one complete environment
+|-- environments/      shared-services/  dev/  prod/
+|-- scripts/           bootstrap.sh, demo.py, gen_agent_catalog.py
+|-- tests/  docs/  docker/  .github/workflows/ci.yml

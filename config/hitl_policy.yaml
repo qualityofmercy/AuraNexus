@@ -1,0 +1,38 @@
+# Human-in-the-loop policy. Loaded by core/hitl.py.
+# Tiers follow the Run-phase tiered approvals; all other phases reuse them.
+version: 1
+
+tiers:
+  1:
+    description: Low risk (wording, clarification, minor tweak, single-record confirmation)
+    due_hours: 48
+    required_approvals: 1
+    distinct_roles: false
+  2:
+    description: Medium (sequence, dependency, owner changes, merges, plan or template changes)
+    due_hours: 24
+    required_approvals: 1
+    distinct_roles: false
+  3:
+    description: High (rollback, data migration approach, business sign-off, guideline library)
+    due_hours: 24
+    required_approvals: 2
+    distinct_roles: true
+    approver_roles: [pm, functional_lead, technical_lead, steering]
+
+# Overdue checkpoints widen the approver set one level per missed deadline.
+escalation:
+  roles_by_level:
+    1: [pm]
+    2: [pm, steering]
+  deadline_extension_hours: 24
+  max_level: 2
+
+# Hours added to the deadline when an approver defers.
+defer_hours: 72
+
+# Roles that may never decide a checkpoint (separation of duties).
+cannot_decide: [viewer, admin]
+
+# Decisions that must carry a written reason.
+reason_required_for: [modify, reject, defer]

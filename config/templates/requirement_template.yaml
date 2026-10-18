@@ -1,0 +1,40 @@
+# Requirement Gathering Template schema (Prepare phase). Versioned; changes via Template Steward + CP2.
+version: v1.0
+
+field_groups:
+  identification: [req_id, workshop_id, date, client_stakeholder, process_area, sub_process]
+  content: [type, as_is, to_be, business_impact, volume_frequency]
+  systems_and_data: [current_system, custom_objects, data_sources, reporting_needs]
+  sap_fit: [fit_class, clean_core_indicator]
+  governance: [priority, owner, status, linked_requirements, dependencies]
+  traceability: [source_meeting, timestamp, confidence, validated]
+  cross_team: [impacted_areas, flag_status, resolution]
+
+mandatory: [process_area, sub_process, type, as_is, to_be, business_impact, volume_frequency, priority, owner]
+
+item_types: [pain_point, requirement, current_state_fact, constraint, assumption, decision, open_question]
+
+project_type_fields:
+  brownfield:
+    - custom_code_inventory
+    - modification_retention
+    - add_on_compatibility
+    - data_volume_archiving
+    - downtime_tolerance
+    - interface_changes
+    - conversion_simplification_items
+  greenfield:
+    - fit_to_standard_gaps
+    - org_structure_redesign
+    - process_harmonisation
+    - master_data_cleansing_scope
+    - clean_core_adherence
+    - localisation
+
+# Client roles expected in a workshop per SAP process area (stakeholder coverage score).
+required_roles_by_area:
+  O2C: [sales_manager, order_management_lead, ar_lead]
+  P2P: [procurement_lead, ap_lead, warehouse_lead]
+  R2R: [controller, gl_lead]
+  MasterData: [data_owner, data_steward]
+  default: [process_owner]

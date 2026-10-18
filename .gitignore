@@ -3,3 +3,14 @@
 *.tfstate.*
 *.tfvars
 !*.example.tfvars
+
+# python / tooling
+__pycache__/
+*.pyc
+.venv/
+.env
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+*.egg-info/

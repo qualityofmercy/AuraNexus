@@ -1,0 +1,43 @@
+# Process Interdependency Map (seed). Owner: Solution Architect. Version every change.
+version: 1
+dependencies:
+  - from: SD
+    to: FI-AR
+    type: process
+    impact: Credit block and billing rules drive dunning and open-item handling.
+  - from: SD
+    to: MM
+    type: process
+    impact: Availability check and delivery processing consume stock and reservations.
+  - from: MM
+    to: FI-AP
+    type: process
+    impact: Goods receipt / invoice receipt matching and GR/IR clearing.
+  - from: MM
+    to: CO
+    type: data
+    impact: Material valuation and cost-centre account assignment feed controlling.
+  - from: FI-GL
+    to: CO
+    type: data
+    impact: Chart of accounts, profit centres and cost elements must stay consistent.
+  - from: MasterData
+    to: SD
+    type: data
+    impact: Customer, material and pricing master data ownership and cleansing scope.
+  - from: MasterData
+    to: MM
+    type: data
+    impact: Vendor and material master harmonisation.
+  - from: WM-EWM
+    to: SD
+    type: interface
+    impact: Outbound delivery and picking confirmation interfaces.
+  - from: SD
+    to: Reporting
+    type: organisational
+    impact: Profitability reporting needs CO-PA characteristics agreed with Controlling.
+  - from: "*"
+    to: Security
+    type: organisational
+    impact: Authorisation concept and segregation of duties apply to every process change.

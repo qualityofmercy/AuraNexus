@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AuraNexus · Demo</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="logo">◆</span><div><b>AuraNexus</b><small>AI project lifecycle · agents propose, humans decide</small></div></div>
+  <div class="proj"><span class="tag">Demo sandbox</span><span id="projName"></span></div>
+  <div class="top-actions">
+    <label class="persona">Acting as
+      <select id="persona"></select>
+    </label>
+    <button id="btnThread" class="btn accent">Defect trace</button>
+    <button id="btnAudit" class="btn">Audit trail <span id="auditBadge" class="badge"></span></button>
+    <button id="btnReset" class="btn ghost">Reset</button>
+  </div>
+</header>
+
+<div class="layout">
+  <nav id="steps" aria-label="Demo steps"></nav>
+
+  <main>
+    <section id="stepHeader" class="card step-header"></section>
+    <section id="result"></section>
+    <section id="queue" class="card"></section>
+  </main>
+
+  <aside id="side">
+    <div class="card"><h3>Notifications</h3><div id="notes"></div></div>
+    <div class="card"><h3>Register <small>(human-approved only)</small></h3><div id="registerCounts" class="chips"></div></div>
+    <div class="card"><h3>Audit chain <span id="chainState"></span></h3><div id="auditTicker"></div></div>
+  </aside>
+</div>
+
+<dialog id="decision">
+  <form method="dialog" id="decisionForm">
+    <h3 id="dTitle"></h3>
+    <p class="muted" id="dSub"></p>
+    <label>Reason <span class="muted" id="dReasonHint"></span>
+      <textarea id="dReason" rows="3" placeholder="Recorded in the audit trail"></textarea>
+    </label>
+    <label id="dModifyWrap" hidden>Edited payload (JSON)
+      <textarea id="dPayload" rows="10" spellcheck="false"></textarea>
+    </label>
+    <div class="dialog-actions">
+      <button type="button" class="btn ghost" id="dCancel">Cancel</button>
+      <button type="submit" class="btn accent" id="dOk">Confirm</button>
+    </div>
+    <p class="error" id="dError"></p>
+  </form>
+</dialog>
+
+<dialog id="drawer" class="drawer">
+  <div class="drawer-head"><h3 id="drawerTitle"></h3><button class="btn ghost" id="drawerClose">Close</button></div>
+  <div id="drawerBody"></div>
+</dialog>
+
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+# Prepare-phase workshop quality score (out of 100). Tune after the pilot, then freeze.
+version: 1
+weights:
+  completeness: 20
+  specificity: 15
+  cross_process_awareness: 15
+  traceability: 10
+  validation_rate: 10
+  stakeholder_coverage: 10
+  open_question_ratio: 10
+  consistency: 10
+thresholds:
+  green: 80
+  amber: 65
+# Section 8.1 re-baseline triggers (N and the rejection threshold are project decisions).
+rebaseline:
+  restructured_entries_pct: 30
+  new_mandatory_field_workshops: 3
+  rejection_rate_pct: 25

@@ -1,0 +1,16 @@
+# Build-phase deliverable rubric (FS, TS, Code, TUT). Dimension scores come from the LLM with
+# evidence; the weighted total is always computed deterministically.
+version: 1
+weights:
+  completeness: 25
+  correctness: 25
+  guideline_compliance: 20
+  traceability: 20
+  clarity: 10
+thresholds:
+  green: 80
+  amber: 65
+# Definition-of-Done gate thresholds
+dod:
+  min_rubric_score: 70
+  min_test_coverage_pct: 80

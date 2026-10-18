@@ -1,0 +1,9 @@
+output "api_url" { value = module.stack.api_url }
+output "worker_url" { value = module.stack.worker_url }
+output "migration_job" { value = module.stack.migration_job }
+output "database_instance" { value = module.stack.database_instance }
+output "bucket" { value = module.stack.bucket }
+output "analytics_dataset" { value = module.stack.analytics_dataset }
+output "service_accounts" { value = module.stack.service_accounts }
+output "notifications_subscription" { value = module.stack.notifications_subscription }
+output "dlq_subscription" { value = module.stack.dlq_subscription }

@@ -1,0 +1,37 @@
+# Cutover rehearsal / production scoring rubric. Weights are FROZEN before the first scored
+# rehearsal; any later change must be a new rubric version approved by the PM (see run.scoring).
+version: 1
+weights:
+  schedule_adherence: 25
+  execution_quality: 20
+  data_integrity: 20
+  issue_management: 15
+  readiness_handoffs: 10
+  rollback_readiness: 10
+
+# Brownfield weights schedule + rollback more; Greenfield weights data integrity + issues more.
+profile_weights:
+  brownfield:
+    schedule_adherence: 30
+    execution_quality: 20
+    data_integrity: 15
+    issue_management: 10
+    readiness_handoffs: 10
+    rollback_readiness: 15
+  greenfield:
+    schedule_adherence: 20
+    execution_quality: 15
+    data_integrity: 25
+    issue_management: 20
+    readiness_handoffs: 10
+    rollback_readiness: 10
+
+thresholds:
+  green: 85
+  amber: 70
+
+# Any of these caps the rating at Red regardless of the total.
+overrides:
+  data_integrity_breach_pct: 2.0   # unresolved reconciliation breach above tolerance (%)
+  require_rollback_tested: true
+  critical_defects_open_max: 0

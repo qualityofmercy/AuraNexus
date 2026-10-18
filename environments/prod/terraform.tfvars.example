@@ -1,0 +1,11 @@
+# Copy to terraform.tfvars (git-ignored) and fill in. Contains no secrets.
+project_id = "auranexus-prod-REPLACE"
+region     = "asia-south1"
+image      = "asia-south1-docker.pkg.dev/REPLACE/auranexus/auranexus:latest"
+
+tenants = {
+  acme = { display_name = "Acme Industries", admin_email = "pm@acme.example" }
+}
+
+api_invokers      = ["group:pmo@example.com"]
+dashboard_readers = ["group:pmo@example.com"]

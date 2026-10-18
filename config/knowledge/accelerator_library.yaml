@@ -1,0 +1,30 @@
+# Accelerator Library (seed). Owner: Practice / CoE. Typical pain points and questions by process.
+version: 1
+industries: [manufacturing, retail, utilities]
+processes:
+  O2C:
+    pain_points:
+      - Manual credit-limit checks delay order release
+      - Inconsistent pricing condition maintenance across sales organisations
+    questions:
+      - What is the order volume per day, and what share needs manual intervention?
+      - Which pricing procedures and condition types are in use today, and which are custom?
+      - How are credit blocks released and who owns the release?
+  P2P:
+    pain_points:
+      - Three-way match exceptions are cleared manually
+      - Vendor master duplicates across plants
+    questions:
+      - What is the invoice volume and the current exception rate?
+      - Which approval workflows exist for purchase requisitions?
+  R2R:
+    pain_points:
+      - Period-end close depends on spreadsheets
+    questions:
+      - How many days does the close take, and what are the critical path activities?
+      - Which parallel ledgers and currencies are required?
+  MasterData:
+    pain_points:
+      - No single data owner per object
+    questions:
+      - Who owns customer, material and vendor data, and what is the cleansing scope?
